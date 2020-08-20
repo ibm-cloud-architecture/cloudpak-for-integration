@@ -13,20 +13,12 @@ const CommunityAuthor = ({ name, imageUrl, twitterUrl, githubUrl, description })
             <strong>{name}</strong>
             {twitterUrl ? (
               <a href={twitterUrl} target="_blank" rel="noopener noreferrer">
-                <img
-                  src="https://storage.googleapis.com/graphql-engine-cdn.hasura.io/learn-hasura/assets/social-media/twitter-icon.svg"
-                  alt="Twitter Icon"
-                  aria-label="Twitter"
-                />
+                <img src="../static/cp4i-logo.svg" alt="Twitter Icon" aria-label="Twitter" />
               </a>
             ) : null}
             {githubUrl ? (
               <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                <img
-                  src="https://storage.googleapis.com/graphql-engine-cdn.hasura.io/learn-hasura/assets/social-media/github-icon.svg"
-                  alt="Github Icon"
-                  aria-label="Github"
-                />
+                <img src="../static/cp4i-logo.svg" alt="Github Icon" aria-label="Github" />
               </a>
             ) : null}
           </div>

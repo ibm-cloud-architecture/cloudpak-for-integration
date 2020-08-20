@@ -1,32 +1,17 @@
 const config = {
   gatsby: {
     pathPrefix: '/',
-    siteUrl: 'https://hasura.io',
+    siteUrl: 'https://ibm-cloud-architecture.github.io/cloudpak-for-integration',
     gaTrackingId: null,
     trailingSlash: false,
   },
   header: {
-    logo: 'https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/brand.svg',
-    logoLink: 'https://hasura.io/learn/',
+    logo: 'static/cp4i-logo.svg',
     title:
-      "<a href='https://hasura.io/learn/'><img class='img-responsive' src='https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/learn-logo.svg' alt='Learn logo' /></a>",
-    githubUrl: 'https://github.com/hasura/gatsby-gitbook-boilerplate',
+      "<a href='https://ibm-cloud-architecture.github.io/cloudpak-for-integration'><img class='img-responsive' src='static/cp4i-logo.svg' alt='CP4I logo' /></a>",
+    githubUrl: 'https://github.com/ibm-cloud-architecture/cloudpak-for-integration',
     helpUrl: '',
     tweetText: '',
-    social: `<li>
-		    <a href="https://twitter.com/hasurahq" target="_blank" rel="noopener">
-		      <div class="twitterBtn">
-		        <img src='https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/twitter-brands-block.svg' alt={'Discord'}/>
-		      </div>
-		    </a>
-		  </li>
-			<li>
-		    <a href="https://discordapp.com/invite/hasura" target="_blank" rel="noopener">
-		      <div class="discordBtn">
-		        <img src='https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/discord-brands-block.svg' alt={'Discord'}/>
-		      </div>
-		    </a>
-		  </li>`,
     links: [{ text: '', link: '' }],
     search: {
       enabled: false,
@@ -44,18 +29,23 @@ const config = {
     collapsedNav: [
       '/codeblock', // add trailing slash if enabled above
     ],
-    links: [{ text: 'Hasura', link: 'https://hasura.io' }],
+    links: [
+      {
+        text: 'Cloud Pak for Integration',
+        link: 'https://www.ibm.com/cloud/cloud-pak-for-integration',
+      },
+    ],
     frontline: false,
     ignoreIndex: true,
     title:
-      "<a href='https://hasura.io/learn/'>graphql </a><div class='greenCircle'></div><a href='https://hasura.io/learn/graphql/react/introduction/'>react</a>",
+      "<a href='https://www.ibm.com/support/knowledgecenter/en/SSGT7J'>Knowledge Center</a><div class='greenCircle'></div><a href='https://www.ibm.com/demos/collection/Cloud-Pak-for-Integration/'>Demos</a>",
   },
   siteMetadata: {
-    title: 'Gatsby Gitbook Boilerplate | Hasura',
-    description: 'Documentation built with mdx. Powering hasura.io/learn ',
+    title: 'Cloud Pak for Integration | IBM',
+    description: 'Documentation for IBM Cloud Pak for Integration',
     ogImage: null,
-    docsLocation: 'https://github.com/hasura/gatsby-gitbook-boilerplate/tree/master/content',
-    favicon: 'https://graphql-engine-cdn.hasura.io/img/hasura_icon_black.svg',
+    docsLocation: 'https://github.com/ibm-cloud-architecture/cloudpak-for-integration',
+    favicon: 'static/cp4i-logo.svg',
   },
   pwa: {
     enabled: false, // disabling this will also remove the existing service worker.
