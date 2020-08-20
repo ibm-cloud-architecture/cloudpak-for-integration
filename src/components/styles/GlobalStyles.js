@@ -230,6 +230,9 @@ export const baseStyles = injectGlobal`
     margin-top: 16px;
     text-transform: uppercase;
   }
+  .headerTitle img{
+    height: 50px;
+  }
   .headerTitle a {
     color: #fff;
   }
@@ -286,7 +289,7 @@ export const baseStyles = injectGlobal`
   }
 
   .navBarBrand img {
-    width: 120px;
+    width: 60px;
     margin-right: 6px;
     display: inline-block;
   }

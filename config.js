@@ -6,9 +6,9 @@ const config = {
     trailingSlash: false,
   },
   header: {
-    logo: 'static/cp4i-logo.svg',
+    logo: './cp4i-logo.svg',
     title:
-      "<a href='https://ibm-cloud-architecture.github.io/cloudpak-for-integration'><img class='img-responsive' src='static/cp4i-logo.svg' alt='CP4I logo' /></a>",
+      "<a href='https://ibm-cloud-architecture.github.io/cloudpak-for-integration'><img class='img-responsive' src='./cp4i-banner.png' alt='CP4I logo'/></a>",
     githubUrl: 'https://github.com/ibm-cloud-architecture/cloudpak-for-integration',
     helpUrl: '',
     tweetText: '',
@@ -45,7 +45,7 @@ const config = {
     description: 'Documentation for IBM Cloud Pak for Integration',
     ogImage: null,
     docsLocation: 'https://github.com/ibm-cloud-architecture/cloudpak-for-integration',
-    favicon: 'static/cp4i-logo.svg',
+    favicon: './cp4i-logo.ico',
   },
   pwa: {
     enabled: false, // disabling this will also remove the existing service worker.
