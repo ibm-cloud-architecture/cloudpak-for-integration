@@ -1,0 +1,58 @@
+apiVersion: eventstreams.ibm.com/v1beta1
+kind: KafkaConnectS2I
+metadata:
+  name: es-prod-cluster #replace - name of your kafkaconnectS2I
+  annotations:
+    eventstreams.ibm.com/use-connector-resources: "true"
+spec:
+  replicas: 1
+  bootstrapServers: 'es-prod-kafka-bootstrap.cp4i.svc:9093' #replace - your INTERNAL bootstrap server
+  config:
+    config.storage.topic: connect-cluster-configs #replace (optional) - topic name to store config
+    group.id: connect-cluster #replace (optional) - consumer group id
+    offset.storage.topic: connect-cluster-offsets #replace (optional) - topic name to store offset
+    status.storage.topic: connect-cluster-status #replace (optional) - topic name to store status
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+  template:
+    pod:
+      imagePullSecrets:
+        - name: deployer-dockercfg-dqzb2 # replace - your internal openshift image registry image pull secret (usually starts with deployer-dockercfg-xxxxx)
+      metadata:
+        annotations:
+          cloudpakId: xxxx # replace - your cloudpakId
+          cloudpakName: IBM Cloud Pak for Integration
+          cloudpakVersion: 2020.2.1
+          eventstreams.production.type: CloudPakForIntegrationNonProduction
+          productChargedContainers: es-prod-connect # # replace - the name of your kafkaconnectS2I (line 4 of this yaml) with postfix "-connect"
+          productCloudpakRatio: '2:1'
+          productID: xxxx # replace - your productID
+          productMetric: VIRTUAL_PROCESSOR_CORE
+          productName: IBM Event Streams for Non Production
+          productVersion: 10.0.0
+  containers: # mq configuration section
+    - name: es-prod-cluster #replace - any name 
+      image: kafkaconnect-with-mq-source:0.0.1
+      volumeMounts:
+        - name: mq-truststore-cert # replace - any name for volumeMount
+          mountPath: /opt/kafka/external-configuration/mq-truststore-cert/ # replace - /opt/kafka/external-configuration/<volumeName>
+  externalConfiguration:
+    volumes:
+      - name: mq-truststore-cert # replace - any name for volumeName
+        secret:
+          secretName: mq-truststore-cert # replace - secret with your mq certificate
+  tls:
+      trustedCertificates:
+        - secretName: es-prod-cluster-ca-cert # replace - eventstreams instance name with postfix "-ca-cert" for example, <your-eventstreams-instance-name>-ca-cert
+          certificate: ca.crt
+  authentication:
+    type: tls
+    certificateAndKey:
+      certificate: user.crt
+      key: user.key
+      secretName: production-internal #replace - name of the secret you created for internal server by clicking on "Generate TLS" on eventstreams UI

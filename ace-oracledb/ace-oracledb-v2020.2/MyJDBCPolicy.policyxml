@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policies>
+  <policy policyType="JDBCProviders" policyName="MyJDBCPolicy" policyTemplate="Oracle">
+    <databaseName>ORCLCDB</databaseName>
+    <databaseType>Oracle</databaseType>
+    <databaseVersion></databaseVersion>
+    <type4DriverClassName>oracle.jdbc.OracleDriver</type4DriverClassName>
+    <type4DatasourceClassName>oracle.jdbc.xa.client.OracleXADataSource</type4DatasourceClassName>
+    <connectionUrlFormat>jdbc:oracle:thin:system/Oradoc_db1@hostname:32769:ORCLCDB</connectionUrlFormat>
+    <connectionUrlFormatAttr1></connectionUrlFormatAttr1>
+    <connectionUrlFormatAttr2></connectionUrlFormatAttr2>
+    <connectionUrlFormatAttr3></connectionUrlFormatAttr3>
+    <connectionUrlFormatAttr4></connectionUrlFormatAttr4>
+    <connectionUrlFormatAttr5></connectionUrlFormatAttr5>
+    <serverName>hostname</serverName>
+    <portNumber>32769</portNumber>
+    <jarsURL>/Ace2DB2JDBC/instantclient_19_3</jarsURL>
+    <databaseSchemaNames>useProvidedSchemaNames</databaseSchemaNames>
+    <description></description>
+    <maxConnectionPoolSize>0</maxConnectionPoolSize>
+    <securityIdentity>myoracleidentity</securityIdentity>
+    <environmentParms></environmentParms>
+    <jdbcProviderXASupport>true</jdbcProviderXASupport>
+    <useDeployedJars>true</useDeployedJars>
+  </policy>
+</policies>

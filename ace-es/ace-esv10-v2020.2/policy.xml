@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policies>
+ <policy policyType="Kafka" policyName="kafka" policyTemplate="Kafka">
+  <bootstrapServers>es-prod-kafka-bootstrap-cp4i.apps.ctocp44.ocp.csplab.local:443</bootstrapServers>
+  <securityProtocol>SASL_SSL</securityProtocol>
+  <saslMechanism>SCRAM-SHA-512</saslMechanism>
+  <sslProtocol>TLSv1.2</sslProtocol>
+  <securityIdentity>kafkasec</securityIdentity>
+  <saslConfig>org.apache.kafka.common.security.scram.ScramLoginModule required;</saslConfig>
+  <sslKeystoreLocation></sslKeystoreLocation>
+  <sslKeystoreType></sslKeystoreType>
+  <sslKeystoreSecurityIdentity></sslKeystoreSecurityIdentity>
+  <sslKeySecurityIdentity></sslKeySecurityIdentity>
+  <sslTruststoreLocation></sslTruststoreLocation>
+  <sslTruststoreType></sslTruststoreType>
+  <sslTruststoreSecurityIdentity></sslTruststoreSecurityIdentity>
+  <sslEnableCertificateHostnameChecking>true</sslEnableCertificateHostnameChecking>
+ </policy>
+</policies>

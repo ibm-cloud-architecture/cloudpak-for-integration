@@ -1,0 +1,6 @@
+---
+ResourceManagers:
+ JVM:
+  truststoreType: 'PKCS12'
+  truststoreFile: '/home/aceuser/truststores/es-cert.p12'
+  truststorePass: 'truststore::truststorePass'

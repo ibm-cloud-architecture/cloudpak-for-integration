@@ -1,0 +1,22 @@
+apiVersion: eventstreams.ibm.com/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: mq-sink-connector #replace - name for your sink connector
+  namespace: cp4i # replace - namespace where your eventstreams is installed
+  labels:
+    eventstreams.ibm.com/cluster: es-prod-cluster #replace - name of your kafkaconnectS2I (line 4 of kafkaconnectS2I.yaml)
+spec:
+  class: com.ibm.eventstreams.connect.mqsink.MQSinkConnector
+  tasksMax: 1
+  config:
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: org.apache.kafka.connect.storage.StringConverter
+    topics: MQ.TOPIC #replace - eventstreams topic name
+    mq.queue.manager: <> #replace - MQ queue manager
+    mq.connection.name.list: <host>(443) #replace - hostname with port in the parentheses for example, icp.cp4i.ibm.com(443) 
+    mq.channel.name: <> #replace - channel name
+    mq.queue: <> #replace - queue name
+    mq.message.builder: com.ibm.eventstreams.connect.mqsink.builders.DefaultMessageBuilder
+    mq.ssl.cipher.suite: '*TLS12' #replace - cipher suite (not cipher specification) https://www.ibm.com/support/knowledgecenter/SSFKSJ_9.2.0/com.ibm.mq.dev.doc/q113220_.htm
+    mq.ssl.truststore.location: /opt/kafka/external-configuration/mq-truststore-cert/client.jks # replace - /opt/kafka/external-configuration/<volumeMount>/<certficateName>
+    mq.ssl.truststore.password: passw0rd #replace - password for the certificate

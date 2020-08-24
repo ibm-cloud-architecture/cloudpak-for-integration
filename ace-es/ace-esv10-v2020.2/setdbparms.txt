@@ -1,0 +1,2 @@
+kafka::kafkasec es-prod-external-user <scram-password>
+truststore::truststorePass placeholder <p12-password>
