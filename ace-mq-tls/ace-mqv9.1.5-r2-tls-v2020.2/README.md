@@ -15,7 +15,7 @@
 ## Create SNI Channel name based Route
 
 - [Knowledge Center](https://www.ibm.com/support/knowledgecenter/SSFKSJ_9.2.0/com.ibm.mq.ctr.doc/cc_conn_qm_openshift.htm)
-- [MQ Channel SNI mapping rules](https://www.ibm.com/support/pages/-ibm-websphere-mq-how-does-mq-provide-multiple-certificates-certlabl-capability)
+- [MQ Channel SNI mapping rules](https://www.ibm.com/support/pages/ibm-websphere-mq-how-does-mq-provide-multiple-certificates-certlabl-capability)
 - You can follow the video above or use the sample yaml
     - Route for `QUICKSTART` QM [quickstart-ext-conn-traffic](<./quickstart-ext-conn-traffic.yaml>)
     - Route for `hasingle` QM [mq-dev-ha-single-conn-traffic](<./mq-dev-ha-single-conn-traffic.yaml>)
