@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mq-dev-ha-single-conn-traffic
+  namespace: cp4i
+spec:
+  host: hasingle2e-conn.chl.mq.ibm.com
+  to:
+    kind: Service
+    name: mq-dev-ha-single-ibm-mq
+  port:
+    targetPort: 1414
+  tls:
+    termination: passthrough

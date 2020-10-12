@@ -1,0 +1,39 @@
+apiVersion: mq.ibm.com/v1beta1
+kind: QueueManager
+metadata:
+  name: quickstart-cp4i
+  namespace: cp4i
+spec:
+  version: 9.1.5.0-r2
+  debug: true
+  license:
+    accept: true
+    license: L-RJON-BN7PN3
+    use: Production
+  pki:
+    keys:
+      - name: default
+        secret:
+          secretName: mqcert
+          items:
+            - tls.key
+            - tls.crt
+    trust:
+      - name: app
+        secret:
+          secretName: mqcert
+          items:
+            - app.crt
+  template:
+    pod:
+      containers:
+        - name: qmgr
+          env:
+            - name: MQSNOAUT
+              value: 'yes'
+  web:
+    enabled: true
+  queueManager:
+    storage:
+      queueManager:
+        type: ephemeral
