@@ -6,7 +6,7 @@
 - Follow this guide for [Creating Certificates and KDB files](<./Create KDB.md>)
 - Follow this video to see how to import the certs into TLS Secrets and deploy them with MQ: [How to configure MQ with TLS certificates as secrets and expose traffic externally with CP4I](https://www.youtube.com/watch?v=R0RZEL4jiUI)
 
-## Deploy MQ `QueueManager` with TLS Secrets
+## Deploy MQ QueueManager with TLS Secrets
 
 - You can follow the video above or use the sample yaml syntax for deploying MQ with TLS Secrets through the `pki.keys` and `pki.trust`  section:
     -  `QUICKSTART` QM [quickstart-cp4i](<./quickstart-cp4i.yaml>)
