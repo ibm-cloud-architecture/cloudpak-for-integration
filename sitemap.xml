@@ -9,5 +9,6 @@
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/ace-mq-tls/ace-mqv9.1.5-r2-tls-v2020.2/ace-mqv9.1.5-r2-tls-v2020.2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/ace-oracledb/ace-oracledb-v2020.2/ace-oracledb-v2020.2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/ace-soap-create-route-ocp/ace-soap-v2020.2/ace-soap-v2020.2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/apic-v10-eks/README</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/es-mq/esv10-mq-v2020.2/esv10-mq-v2020.2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
