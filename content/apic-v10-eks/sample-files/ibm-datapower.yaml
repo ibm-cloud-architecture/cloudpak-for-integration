@@ -1,0 +1,375 @@
+---
+# Source: datapower-operator/templates/service_account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: datapower-operator
+  labels:
+    app.kubernetes.io/instance: datapower-operator
+    app.kubernetes.io/name: datapower-operator
+    app.kubernetes.io/managed-by: datapower-operator
+imagePullSecrets:
+- name: ibm-entitlment-key
+---
+# Source: datapower-operator/templates/cluster_role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: datapower-operator
+  labels:
+    app.kubernetes.io/instance: datapower-operator
+    app.kubernetes.io/name: datapower-operator
+    app.kubernetes.io/managed-by: datapower-operator
+rules:
+
+# meeded for administration of validating and apic-testing webhooks
+# for the CRDs which this operator manages
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - '*'
+
+# needed for reconciliation of the admission controllers
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterroles
+  - clusterrolebindings
+  verbs:
+  - get
+  - list
+
+# needed for management of owned CRDs
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+  - update
+
+# needed for management of conversion webhook deployment, which can
+# exist in other namespaces than this operator
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+
+# needed for management of conversion webhook deployment, which can
+# exist in other namespaces than this operator
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+
+# needed for management of conversion webhook deployment, which can
+# exist in other namespaces than this operator
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+
+# Needed for conversion webhook across namespaces
+- apiGroups:
+  - datapower.ibm.com
+  resources:
+  - '*'
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+# Source: datapower-operator/templates/cluster_role_binding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: datapower-operator
+  labels:
+    app.kubernetes.io/instance: datapower-operator
+    app.kubernetes.io/name: datapower-operator
+    app.kubernetes.io/managed-by: datapower-operator
+subjects:
+- kind: ServiceAccount
+  name: datapower-operator
+  namespace: apic
+roleRef:
+  kind: ClusterRole
+  name: datapower-operator
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: datapower-operator/templates/role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: datapower-operator
+  labels:
+    app.kubernetes.io/instance: datapower-operator
+    app.kubernetes.io/name: datapower-operator
+    app.kubernetes.io/managed-by: datapower-operator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - update
+  - watch
+  - patch
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/exec
+  - services
+  - services/finalizers
+  - endpoints
+  - persistentvolumeclaims
+  - events
+  - configmaps
+  - secrets
+  - serviceaccounts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - apps
+  resourceNames:
+  - datapower-operator
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  - deployments
+  verbs:
+  - get
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+  - monitoringcontroller.cloud.ibm.com
+  resources:
+  - monitoringdashboards
+  verbs:
+    - create
+    - get
+    - list
+    - watch
+- apiGroups:
+  - cp4i.ibm.com
+  resources:
+  - cp4iservicesbindings
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - patch
+  - update
+  - delete
+---
+# Source: datapower-operator/templates/role_binding.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  creationTimestamp: null
+  name: datapower-operator
+  labels:
+    app.kubernetes.io/instance: datapower-operator
+    app.kubernetes.io/name: datapower-operator
+    app.kubernetes.io/managed-by: datapower-operator
+subjects:
+- kind: ServiceAccount
+  name: datapower-operator
+  namespace: apic
+roleRef:
+  kind: Role
+  name: datapower-operator
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: datapower-operator/templates/operator.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datapower-operator
+  labels:
+    app.kubernetes.io/instance: datapower-operator
+    app.kubernetes.io/name: datapower-operator
+    app.kubernetes.io/managed-by: datapower-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: datapower-operator
+      app.kubernetes.io/instance: datapower-operator
+      app.kubernetes.io/name: datapower-operator
+      app.kubernetes.io/managed-by: datapower-operator
+  template:
+    metadata:
+      labels:
+        name: datapower-operator
+        app.kubernetes.io/instance: datapower-operator
+        app.kubernetes.io/name: datapower-operator
+        app.kubernetes.io/managed-by: datapower-operator
+      annotations:
+        productID: datapower-operator
+        productName: "IBM DataPower Operator"
+        productVersion: 1.1.0
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "beta.kubernetes.io/arch"
+                operator: In
+                values: ["amd64"]
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: zone
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: datapower-operator
+            app.kubernetes.io/name: datapower-operator
+            app.kubernetes.io/managed-by: datapower-operator
+      hostNetwork: false
+      hostPID: false
+      hostIPC: false
+      serviceAccountName: datapower-operator
+      containers:
+        - name: datapower-operator
+          image: ibmcom/datapower-operator:1.1.1
+          command:
+          - datapower-operator
+          args:
+          - "--zap-encoder=json"
+          - "--zap-level=info"
+          - "--zap-time-encoding=iso8601"
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: OPERATOR_NAME
+              value: "datapower-operator"
+            - name: NAMESPACED_NAME
+              value: datapower-operator
+            - name: IBM_ENTITLED_REGISTRY
+              value: "cp.icr.io/cp/datapower"
+            - name: IBM_DOCKER_HUB
+              value: "ibmcom"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: 2
+              memory: "2Gi"
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+      securityContext:
+        runAsNonRoot: true

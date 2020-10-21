@@ -1,0 +1,58 @@
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corporation 2020 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with
+# IBM Corp.
+
+apiVersion: gateway.apiconnect.ibm.com/v1beta1
+kind: GatewayCluster
+metadata:
+  name: gateway
+  labels: {
+    app.kubernetes.io/instance: "gateway",
+    app.kubernetes.io/managed-by: "ibm-apiconnect",
+    app.kubernetes.io/name: "gateway"
+  }
+spec:
+  version: 10.0.1.0
+  profile: n1xc4.m8
+  imagePullSecrets:
+  - ibm-entitlement-key
+  imageRegistry: cp.icr.io/cp/apic
+  apicGatewayServiceV5CompatibilityMode: false
+  apiDebugProbe: true
+  gatewayEndpoint:
+    annotations:
+      certmanager.k8s.io/issuer: ingress-issuer
+    hosts:
+    - name: rgw.$HOSTNAME
+      secretName: gateway-endpoint
+  gatewayManagerEndpoint:
+    annotations:
+      certmanager.k8s.io/issuer: ingress-issuer
+    hosts:
+    - name: rgwd.$HOSTNAME
+      secretName: gateway-manager-endpoint
+  apicGatewayServiceTLS:
+    secretName: gateway-service
+  apicGatewayPeeringTLS:
+    secretName: gateway-peering
+  datapowerLogLevel: 4
+  webGUIManagementEnabled: true
+  webGUIManagementPort: 9090
+  license:
+    accept: true
+    use: nonproduction
+  tokenManagementService:
+    enabled: true
+    storage:
+      storageClassName: gp2
+      volumeSize: 30Gi
+  adminUser:
+    secretName: dp-admin-secret
+  syslogConfig:
+    enabled: false # if true, provide below details
+    # remoteHost: $DATAPOWER_SYSLOG_TCP_REMOTE_HOST # must be a string
+    # remotePort: $DATAPOWER_SYSLOG_TCP_REMOTE_PORT # must be an int
+    # secretName: $DATAPOWER_SYSLOG_TCP_TLS_SECRET # must be a string
