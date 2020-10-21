@@ -1,0 +1,52 @@
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corporation 2020 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with
+# IBM Corp.
+
+apiVersion: portal.apiconnect.ibm.com/v1beta1
+kind: PortalCluster
+metadata:
+  name: portal
+  labels: {
+    app.kubernetes.io/instance: "portal",
+    app.kubernetes.io/managed-by: "ibm-apiconnect",
+    app.kubernetes.io/name: "portal"
+  }
+spec:
+  version: 10.0.1.0
+  profile: n1xc2.m8
+  imagePullSecrets:
+    - ibm-entitlement-key
+  imageRegistry: cp.icr.io/cp/apic
+  portalAdminEndpoint:
+    annotations:
+      certmanager.k8s.io/issuer: ingress-issuer
+    hosts:
+    - name: api.portal.$HOSTNAME
+      secretName: portal-admin
+  portalUIEndpoint:
+    annotations:
+      certmanager.k8s.io/issuer: ingress-issuer
+    hosts:
+    - name: portal.$HOSTNAME
+      secretName: portal-web
+  databaseVolumeClaimTemplate:
+    storageClassName: gp2
+  databaseLogsVolumeClaimTemplate:
+    storageClassName: gp2
+  webVolumeClaimTemplate:
+    storageClassName: gp2
+  backupVolumeClaimTemplate:
+    storageClassName: gp2
+  adminVolumeClaimTemplate:
+    storageClassName: gp2
+  adminClientSubjectDN: CN=portal-admin-client,O=cert-manager
+  microServiceSecurity: certManager
+  certManagerIssuer:
+    name: selfsigning-issuer
+    kind: Issuer
+  license:
+    accept: true
+    use: nonproduction

@@ -1,0 +1,54 @@
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corporation 2020 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with
+# IBM Corp.
+
+apiVersion: analytics.apiconnect.ibm.com/v1beta1
+kind: AnalyticsCluster
+metadata:
+  name: analytics
+  labels: {
+    app.kubernetes.io/instance: "analytics",
+    app.kubernetes.io/managed-by: "ibm-apiconnect",
+    app.kubernetes.io/name: "analytics"
+  }
+spec:
+  version: 10.0.1.0
+  license:
+    accept: true
+    use: nonproduction
+  profile: n1xc2.m16
+  imagePullSecrets:
+  - ibm-entitlement-key
+  imageRegistry: cp.icr.io/cp/apic
+  microServiceSecurity: certManager
+  certManagerIssuer:
+    name: selfsigning-issuer
+    kind: Issuer
+  client:
+    endpoint: 
+      annotations:
+        certmanager.k8s.io/issuer: ingress-issuer
+      hosts:
+      - name: ac.$HOSTNAME
+        secretName: analytics-default-ac-endpoint
+    clientSubjectDN: CN=analytics-client-client,O=cert-manager
+  ingestion:
+    endpoint:
+      annotations:
+        certmanager.k8s.io/issuer: ingress-issuer
+      hosts: 
+      - name: ai.$HOSTNAME
+        secretName: analytics-default-ai-endpoint
+    clientSubjectDN: CN=analytics-ingestion-client,O=cert-manager
+  storage:
+    data:
+      volumeClaimTemplate:
+        storageClassName: gp2
+        volumeSize: 40Gi
+    master:
+      volumeClaimTemplate:
+        storageClassName: gp2
+        volumeSize: 20Gi
