@@ -44,7 +44,7 @@ Refer to `eksctl` doc for more information. https://eksctl.io/usage/creating-and
 
 ```
 eksctl create cluster --name apic-eks --region us-east-1 --nodegroup-name apic-workers \
-                      --node-type c5.4xlarge --nodes 3 --nodes-min 3 --nodes-max 3 --ssh-access \
+                      --node-type c5.4xlarge --nodes 2 --ssh-access \
                       --node-volume-size 120
 ```
 
@@ -54,24 +54,62 @@ Follow directions from the Knowledge Center and download the needed files.
 
 https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.install.doc/tapic_install_Kubernetes_firststeps.html
 
-For the purpose of this guide, some of the file samples are in this repo under directory `sample-files`.
+For the purpose of this guide, some of the file samples are in this repo under directory `sample-files`. Other referenced files will be available in the `apiconnect-operator-release-files_v10.0.1.0.zip` (and within it the `helper_files.zip`) which can be downloaded from Fix Central.
 
 ### Install Ingress and Cert Manager
 
 ```
-# Install Nginx ingress controller
-helm install ingress stable/nginx-ingress --values ingress-config.yml --namespace kube-system
+# Install Nginx ingress controller - ingress-config.yml
+helm install ingress stable/nginx-ingress --values ./sample-files/ingress-config.yml --namespace kube-system
 
 # Create namespace for APIC
 kubectl create ns apic
 kubectl config set-context --current --namespace=apic
 
 # Install cert manager and ingress issuers
-kubectl apply -f ./sample-files/cert-manager-0.10.1.yaml
-kubectl apply -f ./sample-files/ingress-issuer-v1-alpha1.yaml -n apic
+kubectl apply -f cert-manager-0.10.1.yaml
+kubectl apply -f ingress-issuer-v1-alpha1.yaml -n apic
 
 # Check the certs are created
 kubectl get certificates -n apic
+```
+
+```
+NAME                                     READY   SECRET                                   AGE
+analytics-ca                             True    analytics-ca                             3h59m
+analytics-client                         True    analytics-client                         3h59m
+analytics-client-client                  True    analytics-client-client                  28h
+analytics-default-ac-endpoint            True    analytics-default-ac-endpoint            3h59m
+analytics-default-ai-endpoint            True    analytics-default-ai-endpoint            3h59m
+analytics-ingestion-client               True    analytics-ingestion-client               28h
+analytics-server                         True    analytics-server                         3h59m
+api-endpoint                             True    api-endpoint                             28h
+apicuser                                 True    management-db-client-apicuser            28h
+apim-endpoint                            True    apim-endpoint                            28h
+cm-endpoint                              True    cm-endpoint                              28h
+consumer-endpoint                        True    consumer-endpoint                        28h
+gateway-client-client                    True    gateway-client-client                    28h
+gateway-endpoint                         True    gateway-endpoint                         28h
+gateway-manager-endpoint                 True    gateway-manager-endpoint                 28h
+gateway-peering                          True    gateway-peering                          28h
+gateway-service                          True    gateway-service                          28h
+ingress-ca                               True    ingress-ca                               28h
+management-2a4f97b9-postgres             True    management-2a4f97b9-postgres             28h
+management-2a4f97b9-postgres-pgbouncer   True    management-2a4f97b9-postgres-pgbouncer   28h
+management-ca                            True    management-ca                            28h
+management-client                        True    management-client                        28h
+management-natscluster-mgmt              True    management-natscluster-mgmt              28h
+management-server                        True    management-server                        28h
+pgbouncer                                True    management-db-client-pgbouncer           28h
+portal-admin                             True    portal-admin                             28h
+portal-admin-client                      True    portal-admin-client                      28h
+portal-ca                                True    portal-ca                                28h
+portal-client                            True    portal-client                            28h
+portal-server                            True    portal-server                            28h
+portal-web                               True    portal-web                               28h
+postgres                                 True    management-db-client-postgres            28h
+postgres-operator                        True    pgo.tls                                  28h
+replicator                               True    management-db-client-replicator          28h
 ```
 
 You should see the ELB and its external IP created by AWS when you run the following:
@@ -104,8 +142,10 @@ modify the values in each CR that's being applied as needed.
 
 NOTE: for the four files `*_cr.yaml` under `sample-files`, replace `$HOSTNAME` with the wildcard domain that we created above (e.g. `apic-eks-3node.example.com` for this example) 
 
+Other files are available in the `apiconnect-operator-release-files_v10.0.1.0.zip` (and within it the `helper_files.zip`) which can be downloaded from Fix Central.
+
 ```
-kubectl apply -f ./sample-files/ibm-apiconnect-crds.yaml
+kubectl apply -f ibm-apiconnect-crds.yaml
 
 # In this guide I'll be using the entitled registry, so
 # we'll need a pull secret for the images
@@ -180,34 +220,34 @@ https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html
 
 ### References
 
-Internal V10 EKS Install Guide
+* Internal V10 EKS Install Guide
 https://github.ibm.com/apiconnect-field/apicv10EKS
 
-AWS Instance Types
+* AWS Instance Types
 https://aws.amazon.com/ec2/instance-types/
 
-IBM API Connect V10 Knowledge Center - Kubernetes Install
+* IBM API Connect V10 Knowledge Center - Kubernetes Install
 https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.install.doc/capic_planning_deployment_kubernetes.html
 
-Obtaining Install Files
+* Obtaining Install Files
 https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.install.doc/tapic_install_Kubernetes_firststeps.html
 
-Initial Configuration Checklist
+* Initial Configuration Checklist
 https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.cmc.doc/rapic_cmc_checklist.html
 
-Install eksctl
+* Install eksctl
 https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html#install-eksctl
 https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html
 
-Install kubectl
+* Install kubectl
 https://kubernetes.io/docs/tasks/tools/install-kubectl/
 
-Install Helm
+* Install Helm
 https://helm.sh/docs/intro/install/
 
-AWS CLI
+* AWS CLI
 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
 
-AWS IAM
+* AWS IAM
 https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
 
