@@ -167,6 +167,72 @@ kubectl apply -f ./sample-files/apigateway_cr.yaml
 kubectl apply -f ./sample-files/analytics_cr.yaml
 ```
 
+After the deployment is complete, you should see something like the following when running `kubectl get pods`
+
+```
+$ kubectl get pods
+NAME                                                              READY   STATUS      RESTARTS   AGE
+analytics-cj-rollover-1603388700-hxlnt                            0/1     Completed   0          15m
+analytics-client-cdfd8f94f-wjhmp                                  1/1     Running     0          4h11m
+analytics-ingestion-b4459548d-5xcp6                               1/1     Running     0          4h11m
+analytics-mtls-gw-695856497d-4dntr                                1/1     Running     0          4h10m
+analytics-storage-coord-9f75d69d6-jrz7j                           1/1     Running     0          4h11m
+analytics-storage-data-0                                          1/1     Running     0          4h11m
+analytics-storage-master-0                                        1/1     Running     0          4h11m
+backrest-backup-management-2a4f97b9-postgres-t2bt2                0/1     Completed   0          29h
+datapower-operator-6856f485bb-fjntd                               1/1     Running     0          3h20m
+datapower-operator-conversion-webhook-78bdbcdc59-2gpqk            1/1     Running     0          3h20m
+gateway-0                                                         1/1     Running     0          29h
+ibm-apiconnect-6579f568f-kvth2                                    1/1     Running     0          29h
+management-2a4f97b9-postgres-757f467dff-4lzxx                     1/1     Running     0          29h
+management-2a4f97b9-postgres-backrest-shared-repo-6ff9759dwgjvn   1/1     Running     0          29h
+management-2a4f97b9-postgres-pgbouncer-7b6c7b7548-s6vc8           1/1     Running     0          29h
+management-2a4f97b9-postgres-stanza-create-75r4d                  0/1     Completed   0          29h
+management-analytics-proxy-5cfc5d9c87-5vwql                       1/1     Running     0          28h
+management-apim-8676f6d79b-gg2nr                                  1/1     Running     0          28h
+management-client-downloads-server-56464d597c-78sgz               1/1     Running     0          29h
+management-juhu-cf497ff98-hbmrb                                   1/1     Running     0          28h
+management-ldap-cf4fc7bc-mzp5c                                    1/1     Running     0          29h
+management-lur-767c6b7b74-v9gjn                                   1/1     Running     0          28h
+management-nats-operator-66b97844dd-gzhr6                         1/1     Running     0          29h
+management-nats-streaming-operator-5d77b5fc66-4frj5               1/1     Running     0          29h
+management-natscluster-1                                          1/1     Running     0          29h
+management-portal-proxy-78884ddfc-fstjj                           1/1     Running     0          28h
+management-stancluster-1                                          1/1     Running     0          29h
+management-taskmanager-644dfd48b5-rmb8n                           1/1     Running     0          28h
+management-ui-698dd4f45c-gz7qt                                    1/1     Running     0          29h
+management-up-apim-data-populate-0-to-6-8055ab6f-wlv7g            0/1     Completed   0          29h
+management-up-apim-schema-0-to-6-8055ab6f-q9bm6                   0/1     Completed   0          29h
+management-up-lur-data-populate-0-to-2-8055ab6f-p4m8t             0/1     Completed   0          29h
+management-up-lur-schema-0-to-2-8055ab6f-l895h                    0/1     Completed   0          29h
+portal-5727ffec-db-0                                              2/2     Running     0          29h
+portal-5727ffec-www-0                                             2/2     Running     0          29h
+portal-nginx-675d6c6c69-g8xtm                                     1/1     Running     0          29h
+postgres-operator-5b946c9c5-hk7lz                                 4/4     Running     0          29h
+```
+
+Then you should be able to see the ingress URLs from running `kubectl get ingress`
+
+```
+$ kubectl get ingress
+NAME                      HOSTS                                   ADDRESS   PORTS     AGE
+analytics-ac-endpoint     ac.apic-eks-3node.example.com           1.2.3.4   80, 443   4h50m
+analytics-ai-endpoint     ai.apic-eks-3node.example.com           1.2.3.4   80, 443   4h50m
+gateway-gateway           rgw.apic-eks-3node.example.com          1.2.3.4   80, 443   29h
+gateway-gateway-manager   rgwd.apic-eks-3node.example.com         1.2.3.4   80, 443   29h
+management-admin          admin.apic-eks-3node.example.com        1.2.3.4   80, 443   29h
+management-api-manager    manager.apic-eks-3node.example.com      1.2.3.4   80, 443   29h
+management-consumer-api   consumer.apic-eks-3node.example.com     1.2.3.4   80, 443   29h
+management-platform-api   api.apic-eks-3node.example.com          1.2.3.4   80, 443   29h
+portal-portal-director    api.portal.apic-eks-3node.example.com   1.2.3.4   80, 443   29h
+portal-portal-web         portal.apic-eks-3node.example.com       1.2.3.4   80, 443   29h
+```
+
+Now we can navigate to the admin URL (e.g. `admin.apic-eks-3node.example.com`), and follow the Cloud Manager setup checklist.
+
+https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.cmc.doc/rapic_cmc_checklist.html
+
+
 ### Update Node vm.max_map_count
 
 For the analytics pods to come up successfully, we have to set `vm.max_map_count` on each node. Here's a handy command to do that, assuming `ssh` was enabled when the cluster is spun up, allowing the user to log in with the default SSH key/pair.
