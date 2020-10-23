@@ -1,5 +1,4 @@
 ### Install APIC V10 on Amazon EKS
-
 - [Install APIC V10 on Amazon EKS](#install-apic-v10-on-amazon-eks)
 - [Summary](#summary)
 - [Create EKS Cluster](#create-eks-cluster)
@@ -8,9 +7,10 @@
 - [Configure Route53 DNS](#configure-route53-dns)
 - [Apply CRDs and Customize APIC Subsystem Deployment](#apply-crds-and-customize-apic-subsystem-deployment)
 - [Update Node vm.max_map_count](#update-node-vmmax_map_count)
-- [Logging into a Cluster Node](#logging-into-a-cluster-node)
-- [Cluster Access](#cluster-access)
-- [Deleting Cluster](#deleting-cluster)
+- [Cluster Access/Management](#cluster-accessmanagement)
+  - [Logging into a Cluster Node](#logging-into-a-cluster-node)
+  - [Cluster Access](#cluster-access)
+  - [Deleting Cluster](#deleting-cluster)
 - [References](#references)
 
 ### Summary
@@ -75,41 +75,14 @@ kubectl get certificates -n apic
 ```
 
 ```
-NAME                                     READY   SECRET                                   AGE
-analytics-ca                             True    analytics-ca                             3h59m
-analytics-client                         True    analytics-client                         3h59m
-analytics-client-client                  True    analytics-client-client                  28h
-analytics-default-ac-endpoint            True    analytics-default-ac-endpoint            3h59m
-analytics-default-ai-endpoint            True    analytics-default-ai-endpoint            3h59m
-analytics-ingestion-client               True    analytics-ingestion-client               28h
-analytics-server                         True    analytics-server                         3h59m
-api-endpoint                             True    api-endpoint                             28h
-apicuser                                 True    management-db-client-apicuser            28h
-apim-endpoint                            True    apim-endpoint                            28h
-cm-endpoint                              True    cm-endpoint                              28h
-consumer-endpoint                        True    consumer-endpoint                        28h
-gateway-client-client                    True    gateway-client-client                    28h
-gateway-endpoint                         True    gateway-endpoint                         28h
-gateway-manager-endpoint                 True    gateway-manager-endpoint                 28h
-gateway-peering                          True    gateway-peering                          28h
-gateway-service                          True    gateway-service                          28h
-ingress-ca                               True    ingress-ca                               28h
-management-2a4f97b9-postgres             True    management-2a4f97b9-postgres             28h
-management-2a4f97b9-postgres-pgbouncer   True    management-2a4f97b9-postgres-pgbouncer   28h
-management-ca                            True    management-ca                            28h
-management-client                        True    management-client                        28h
-management-natscluster-mgmt              True    management-natscluster-mgmt              28h
-management-server                        True    management-server                        28h
-pgbouncer                                True    management-db-client-pgbouncer           28h
-portal-admin                             True    portal-admin                             28h
-portal-admin-client                      True    portal-admin-client                      28h
-portal-ca                                True    portal-ca                                28h
-portal-client                            True    portal-client                            28h
-portal-server                            True    portal-server                            28h
-portal-web                               True    portal-web                               28h
-postgres                                 True    management-db-client-postgres            28h
-postgres-operator                        True    pgo.tls                                  28h
-replicator                               True    management-db-client-replicator          28h
+NAME                         READY   SECRET                       AGE
+analytics-client-client      True    analytics-client-client      5m36s
+analytics-ingestion-client   True    analytics-ingestion-client   5m36s
+gateway-client-client        True    gateway-client-client        5m36s
+gateway-peering              True    gateway-peering              5m36s
+gateway-service              True    gateway-service              5m36s
+ingress-ca                   True    ingress-ca                   5m36s
+portal-admin-client          True    portal-admin-client          5m36s
 ```
 
 You should see the ELB and its external IP created by AWS when you run the following:
@@ -228,7 +201,7 @@ portal-portal-director    api.portal.apic-eks-3node.example.com   1.2.3.4   80, 
 portal-portal-web         portal.apic-eks-3node.example.com       1.2.3.4   80, 443   29h
 ```
 
-Now we can navigate to the admin URL (e.g. `admin.apic-eks-3node.example.com`), and follow the Cloud Manager setup checklist.
+Now we can navigate to the `management-admin` URL (e.g. `admin.apic-eks-3node.example.com`), and follow the Cloud Manager setup checklist.
 
 https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.cmc.doc/rapic_cmc_checklist.html
 
@@ -244,7 +217,9 @@ kubectl get nodes -o wide --no-headers | awk '{print $7}' | xargs -I {} ssh ec2-
 ```
 
 
-### Logging into a Cluster Node
+### Cluster Access/Management
+
+#### Logging into a Cluster Node
 
 Since we allowed SSH login from `eksctl create cluster` command, we
 can login to the nodes and adjust node settings with `ec2-user`
@@ -256,7 +231,7 @@ kubectl get nodes -o wide
 ssh ec2-user@54.196.40.41
 ```
 
-### Cluster Access
+#### Cluster Access
 ```
 $ aws configure --profile=clusterAdmin
 AWS Access Key ID [None]: <access-key-id>
@@ -276,7 +251,7 @@ Update kubeconfig with a different cluster
 `aws eks --region us-east-1 update-kubeconfig --name apic-eks-3node`
 
 
-### Deleting Cluster
+#### Deleting Cluster
 
 Use the above commands to list out cluster names
 
