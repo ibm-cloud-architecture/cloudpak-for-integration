@@ -1,0 +1,177 @@
+swagger: '2.0'
+info:
+  title: aggregate_response_map
+  x-ibm-name: aggregate-response-map
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+      - invoke:
+          title: invoke
+          version: 2.0.0
+          verb: keep
+          target-url: 'https://jsonplaceholder.typicode.com/posts/1'
+          follow-redirects: false
+          timeout: 60
+          parameter-control:
+            type: blacklist
+            values: []
+          header-control:
+            type: blacklist
+            values: []
+          inject-proxy-headers: true
+          output: responsePayload1
+      - invoke:
+          version: 2.0.0
+          title: invoke
+          backend-type: detect
+          header-control:
+            type: blocklist
+            values: []
+          parameter-control:
+            type: allowlist
+            values: []
+          timeout: 60
+          verb: keep
+          use-http-10: false
+          chunked-uploads: true
+          cache-response: protocol
+          cache-ttl: 900
+          stop-on-error: []
+          target-url: 'https://jsonplaceholder.typicode.com/comments/1'
+          output: responsePayload2
+      - map:
+          version: 2.0.0
+          title: map
+          inputs:
+            input1_response1:
+              schema:
+                type: string
+              variable: responsePayload1.body.title
+              content: application/json
+            input2_response1:
+              schema:
+                type: string
+              variable: responsePayload1.body.body
+              content: application/json
+            input3_response2:
+              schema:
+                type: string
+              variable: responsePayload2.body.email
+              content: application/json
+            input4_response2:
+              schema:
+                type: string
+              variable: responsePayload2.body.body
+              content: application/json
+          outputs:
+            output_aggregated:
+              schema:
+                type: object
+                properties:
+                  postName:
+                    type: string
+                    name: postName
+                  postBody:
+                    type: string
+                    name: postBody
+                  comment:
+                    type: object
+                    name: comment
+                    properties:
+                      commentPoster:
+                        type: string
+                        name: commentPoster
+                      commentBody:
+                        type: string
+                        name: commentBody
+              variable: message.body
+          actions:
+            - set: output_aggregated.postBody
+              from: input2_response1
+              value: $(input2_response1)
+            - set: output_aggregated.postName
+              from: input1_response1
+              value: $(input1_response1)
+            - set: output_aggregated.comment.commentPoster
+              from: input3_response2
+              value: $(input3_response2)
+            - set: output_aggregated.comment.commentBody
+              from: input4_response2
+              value: $(input4_response2)
+  properties:
+    target-url:
+      value: 'http://example.com/operation-name'
+      description: The URL of the target service
+      encoded: false
+basePath: /aggregate-response-map
+paths:
+  /:
+    get:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+    put:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+    post:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    delete:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    options:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    head:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    patch:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+  - clientID: []
+schemes:
+  - https
