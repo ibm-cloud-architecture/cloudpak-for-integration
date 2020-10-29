@@ -19,6 +19,9 @@ https://www.ibm.com/support/knowledgecenter/SSMNED_v10/com.ibm.apic.toolkit.doc/
 - [Creating Draft Product and Publishing](#creating-draft-product-and-publishing)
 - [Replacing the Product](#replacing-the-product)
 - [Create Another New API/Product](#create-another-new-apiproduct)
+- [Download APIs and Products](#download-apis-and-products)
+- [Add Third OAuth Provider](#add-third-oauth-provider)
+- [Cloud Manager Mail Server](#cloud-manager-mail-server)
 
 
 ### Scripting Commands
@@ -82,7 +85,9 @@ Note: if you don't get the API key screen after logging in and instead APIC look
 
 Get List of APIs in Sandbox catalog
 
-`apic apis:list-all --scope catalog --server $api_mgmt --catalog $catalog --org $org`
+```
+apic apis:list-all --scope catalog --server $api_mgmt --catalog $catalog --org $org
+```
 
 
 Create a draft of an API. This will create the API in API Manager but it is not associated with any products yet.
@@ -172,3 +177,49 @@ apic products:publish --server $api_mgmt --catalog $catalog --org $org example-y
 TODO 
 - add a product 3.0 as separate product, without replacing the 2.0.0 product
 -->
+
+### Download APIs and Products
+
+Download APIs and Products from the catalog. Use the flag `--output` to specify where to save the files, or 
+show in standard output (`--output -`).
+
+Get single API
+```
+# List all APIs in the catalog
+apic apis:list-all --server $api_mgmt --org $org --catalog $catalog --scope catalog
+
+# Download single API from the catalog - this will create a file locally called findbranch_2.0.0.yaml
+apic apis:get --server $api_mgmt --org $org --catalog $catalog --scope catalog findbranch:2.0.0
+
+# Download the same API without saving to file (Add --output -) flag
+apic apis:get --server $api_mgmt --org $org --catalog $catalog --scope catalog findbranch:2.0.0 --output -
+
+```
+
+Download all Products and APIs
+
+```
+# Download ALL APIs in the catalog into a directory
+mkdir ./api-dump
+apic apis:clone --server $api_mgmt --org $org --catalog $catalog --scope catalog --output api-dump
+
+# Download ALL Products in the catalog
+apic products:clone --server $api_mgmt --org $org --catalog $catalog --scope catalog --output api-dump
+```
+
+
+### Add Third OAuth Provider
+
+Modify the URLs and other properties as needed, and run the `create` command.
+
+```
+apic oauth-providers:create --server $api_mgmt --org $org setup-yamls/third-party-oauth-okta.yaml
+```
+
+### Cloud Manager Mail Server
+
+List out existing mail servers
+
+```
+apic mail-servers:list --server $cloud_mgmt --org admin
+```
