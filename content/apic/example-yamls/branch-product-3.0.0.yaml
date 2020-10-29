@@ -1,0 +1,33 @@
+product: 1.0.0
+info:
+  name: find-branch-product
+  title: Find Branches
+  version: 3.0.0
+  categories:
+    - Banking/Branches
+gateways:
+  - datapower-api-gateway
+apis:
+  findbranch3.0.0:
+    $ref: find-branch-api-3.0.0.yaml
+    # name: 'findbranch:3.0.0'
+visibility:
+  view:
+    enabled: true
+    type: public
+    tags: []
+    orgs: []
+  subscribe:
+    enabled: true
+    type: authenticated
+    tags: []
+    orgs: []
+plans:
+  default:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 50/hour
+        hard-limit: false

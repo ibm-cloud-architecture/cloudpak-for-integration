@@ -1,0 +1,30 @@
+product: 1.0.0
+info:
+  name: find-branch-product
+  title: Find Branches
+  version: 1.0.0
+gateways:
+- datapower-api-gateway
+apis:
+  findbranch1.0.0:
+    $ref: find-branch-api-1.0.0.yaml
+visibility:
+  view:
+    enabled: true
+    type: public
+    tags: []
+    orgs: []
+  subscribe:
+    enabled: true
+    type: authenticated
+    tags: []
+    orgs: []
+plans:
+  default:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/hour
+        hard-limit: false
