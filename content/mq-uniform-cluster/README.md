@@ -25,3 +25,6 @@
     
     Watch the `showConns` terminals as the Connections get balanced evenly 3 to each QM
 5. Cleanup, run `./install/cleanup.sh` to remove the Uniform Cluster and resources.
+
+---
+These instructions have been modified from [Callum Jackson's Tutorial](https://github.ibm.com/CALLUMJ/MQonCP4I/blob/master/instructions/uniformCluster/instructions.md#verifying-the-uniform-cluster-works)
