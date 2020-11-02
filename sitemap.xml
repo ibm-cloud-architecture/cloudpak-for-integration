@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/codeblock</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/codeblock</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/introduction</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/apic/apic-cli</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/apic/apic-use-case-resources</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/apic/third-part-oauth-okta</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/codeblock/1-index.md</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/mq-portworx/multiinstance</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/mq-uniform-cluster/README</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/ace-es/ace-esv10-v2020.2/ace-esv10-v2020.2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/ace-mq-tls/ace-mqv9.1.5-r2-tls-v2020.2/Create KDB</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://ibm-cloud-architecture.github.io/cloudpak-for-integration/cloudpak-for-integration/ace-mq-tls/ace-mqv9.1.5-r2-tls-v2020.2/ace-mqv9.1.5-r2-tls-v2020.2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
