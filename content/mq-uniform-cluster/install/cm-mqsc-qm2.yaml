@@ -1,0 +1,21 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: qm2-mqsc-cm
+  namespace: cp4i
+data:
+  config.mqsc: |-
+    DEFINE CHANNEL('QM2.CONN') CHLTYPE(SVRCONN) SSLCIPH('ANY_TLS12') SSLCAUTH(OPTIONAL) REPLACE
+    * block user rule (enable non secure connections on this channel)
+    SET CHLAUTH('QM2.CONN') TYPE(BLOCKUSER) ACTION(REPLACE) USERLIST('nobody')
+    * Custom section
+    *##########################################################################
+    * Channels
+    *##########################################################################
+    define channel('UNICLUS.QM2') chltype(CLUSRCVR) trptype(tcp) conname('mq-uni-clus2-ibm-mq(1414)') CLUSTER(uniclus) REPLACE
+    define channel('UNICLUS.QM1') chltype(CLUSSDR) trptype(tcp) conname('mq-uni-clus1-ibm-mq(1414)') CLUSTER(uniclus) REPLACE
+    *
+    *##########################################################################
+    * Configuration for all queue managers
+    *##########################################################################
+    DEFINE QLOCAL(IN) REPLACE

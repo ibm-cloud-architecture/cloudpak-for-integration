@@ -1,0 +1,67 @@
+apiVersion: mq.ibm.com/v1beta1
+kind: QueueManager
+metadata:
+  name: mq-uni-clus1
+  namespace: cp4i
+spec:
+  version: 9.2.0.0-r1
+  debug: true
+  license:
+    accept: true
+    license: L-RJON-BN7PN3
+    use: Production
+  pki:
+    keys:
+      - name: default
+        secret:
+          secretName: mqcert-secret
+          items:
+            - tls.key
+            - tls.crt
+    trust:
+      - name: app
+        secret:
+          secretName: mqcert-secret
+          items:
+            - app.crt
+  template:
+    pod:
+      containers:
+        - name: qmgr
+          env:
+            - name: MQSNOAUT
+              value: 'yes'
+  web:
+    enabled: true
+  securityContext:
+    supplementalGroups: [99]
+  queueManager:
+    name: qm1
+    mqsc:
+      - configMap:
+          items:
+            - config.mqsc
+          name: qm1-mqsc-cm  
+    ini:
+      - configMap:
+          items:
+            - uniformcluster.ini
+          name: qm1-ini-cm
+    storage:
+      queueManager:
+        type: ephemeral
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mq-uni-clus1-conn-traffic
+  namespace: cp4i
+spec:
+  host: qm12e-conn.chl.mq.ibm.com
+  to:
+    kind: Service
+    name: mq-uni-clus1-ibm-mq
+  port:
+    targetPort: 1414
+  tls:
+    termination: passthrough

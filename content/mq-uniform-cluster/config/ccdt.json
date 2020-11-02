@@ -1,0 +1,119 @@
+{
+  "channel":
+  [
+    {
+        "name": "QM1.CONN",
+        "clientConnection":
+        {
+          "connection":
+          [
+            {
+              "host": "mq-uni-clus1-ibm-mq-qm-cp4i.cp4i-q4-afb9c6047b062b44e3f1b3ecfeba4309-0000.us-east.containers.appdomain.cloud",
+              "port": 443
+            }
+          ],
+          "queueManager": "qm1"
+        },
+        "transmissionSecurity":
+        {
+          "cipherSpecification": "ANY_TLS12"
+        },
+        "type": "clientConnection"
+    },
+    {
+        "name": "QM1.CONN",
+        "clientConnection":
+        {
+          "connection":
+          [
+            {
+              "host": "mq-uni-clus1-ibm-mq-qm-cp4i.cp4i-q4-afb9c6047b062b44e3f1b3ecfeba4309-0000.us-east.containers.appdomain.cloud",
+              "port": 443
+            }
+          ],
+          "queueManager": "QM_GROUP"
+        },
+        "transmissionSecurity":
+        {
+          "cipherSpecification": "ANY_TLS12"
+        },
+        "type": "clientConnection"
+    },
+    {
+        "name": "QM2.CONN",
+        "clientConnection":
+        {
+          "connection":
+          [
+            {
+              "host": "mq-uni-clus2-ibm-mq-qm-cp4i.cp4i-q4-afb9c6047b062b44e3f1b3ecfeba4309-0000.us-east.containers.appdomain.cloud",
+              "port": 443
+            }
+          ],
+          "queueManager": "qm2"
+        },
+        "transmissionSecurity":
+        {
+          "cipherSpecification": "ANY_TLS12"
+        },
+        "type": "clientConnection"
+    },
+    {
+        "name": "QM2.CONN",
+        "clientConnection":
+        {
+          "connection":
+          [
+            {
+              "host": "mq-uni-clus2-ibm-mq-qm-cp4i.cp4i-q4-afb9c6047b062b44e3f1b3ecfeba4309-0000.us-east.containers.appdomain.cloud",
+              "port": 443
+            }
+          ],
+          "queueManager": "QM_GROUP"
+        },
+        "transmissionSecurity":
+        {
+          "cipherSpecification": "ANY_TLS12"
+        },
+        "type": "clientConnection"
+    },
+    {
+        "name": "QM3.CONN",
+        "clientConnection":
+        {
+          "connection":
+          [
+            {
+              "host": "mq-uni-clus3-ibm-mq-qm-cp4i.cp4i-q4-afb9c6047b062b44e3f1b3ecfeba4309-0000.us-east.containers.appdomain.cloud",
+              "port": 443
+            }
+          ],
+          "queueManager": "qm3"
+        },
+        "transmissionSecurity":
+        {
+          "cipherSpecification": "ANY_TLS12"
+        },
+        "type": "clientConnection"
+    },
+    {
+        "name": "QM3.CONN",
+        "clientConnection":
+        {
+          "connection":
+          [
+            {
+              "host": "mq-uni-clus3-ibm-mq-qm-cp4i.cp4i-q4-afb9c6047b062b44e3f1b3ecfeba4309-0000.us-east.containers.appdomain.cloud",
+              "port": 443
+            }
+          ],
+          "queueManager": "QM_GROUP"
+        },
+        "transmissionSecurity":
+        {
+          "cipherSpecification": "ANY_TLS12"
+        },
+        "type": "clientConnection"
+    }
+  ]
+}
