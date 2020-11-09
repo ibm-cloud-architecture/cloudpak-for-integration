@@ -1,0 +1,1 @@
+Content has been moved to https://ibm-cloud-architecture.github.io/cloudpak-for-integration/ 
