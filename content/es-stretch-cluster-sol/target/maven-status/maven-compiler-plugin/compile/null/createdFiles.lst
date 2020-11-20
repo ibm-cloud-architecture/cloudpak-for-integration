@@ -1,0 +1,6 @@
+com/ibm/GlobalStoreInteractiveQueryService/FinancialMessageDataResult.class
+com/ibm/Topology/GlobalStoreTopology.class
+com/ibm/GlobalStoreInteractiveQueryService/GlobalStoreInteractiveQuery.class
+com/ibm/Model/FinancialMessage.class
+com/ibm/GlobalStoreInteractiveQueryService/GlobalStoreEndpoint.class
+com/ibm/GlobalStoreInteractiveQueryService/PipelineMetadata.class
