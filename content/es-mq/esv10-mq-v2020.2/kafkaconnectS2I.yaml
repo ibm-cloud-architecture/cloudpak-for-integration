@@ -48,7 +48,7 @@ spec:
           secretName: mq-truststore-cert # replace - secret with your mq certificate
   tls:
       trustedCertificates:
-        - secretName: es-prod-cluster-ca-cert # replace - eventstreams instance name with postfix "-ca-cert" for example, <your-eventstreams-instance-name>-ca-cert
+        - secretName: es-prod-cluster-ca-cert # replace - eventstreams instance name with suffix "-ca-cert" for example, <your-eventstreams-instance-name>-ca-cert
           certificate: ca.crt
   authentication:
     type: tls
